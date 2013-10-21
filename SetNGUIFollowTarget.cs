@@ -2,10 +2,11 @@ using UnityEngine;
 using HutongGames.PlayMaker;
 
 [ActionCategory("NGUI")]
-[Tooltip("NGUI HUD Follow")]
+[Tooltip("NGUI HUD Follow. Needs NGUI UIFollowTarget Script attached to the gameobject.")]
 public class SetNGUIFollowTarget : FsmStateAction
 {
 	[RequiredField]
+	[CheckForComponent(typeof(UIFollowTarget))]
     [Tooltip("The NGUI HUD GameObject")]
     public FsmOwnerDefault NGUIGameObject;
 	
@@ -14,6 +15,12 @@ public class SetNGUIFollowTarget : FsmStateAction
     public FsmGameObject followTarget;
 	
 	private Transform HUD_t;
+	
+	public override void Reset()
+	{
+			NGUIGameObject = null;
+			followTarget = null;
+	}
 	
 	// Code that runs on entering the state.
 	public override void OnEnter()
