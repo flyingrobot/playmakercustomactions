@@ -8,18 +8,32 @@ public class AudiolistenerPause : FsmStateAction
 	[RequiredField]
 	[Tooltip("Pause listener")]
 	public FsmBool pauseListener;
+	public bool everyFrame;
 	
 	public override void Reset()
 	{
 			pauseListener = false;
 	}
-	
-	
+
 	// Code that runs on entering the state.
 	public override void OnEnter()
 	{
-			AudioListener.pause = pauseListener.Value;
+		DoAudiolistenerPause();
+			if (!everyFrame)
+			{
 			Finish();
+			}
+			
+	}
+
+	public override void OnUpdate()
+	{
+		DoAudiolistenerPause();
+	}
+
+	void DoAudiolistenerPause()
+	{
+		AudioListener.pause = pauseListener.Value;
 	}
 
 
